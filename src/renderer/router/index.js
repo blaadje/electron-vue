@@ -4,14 +4,14 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
-    routes: [
-        {
-            path: '/',
-            component: require('@/components/carousel')
-        },
-        { 
-            path: '*',
-            redirect: '/'
-        }
-    ]
+  routes: [
+    {
+      path: '/',
+      component: require('@/components/carousel')
+    },
+    {
+      path: '*',
+      redirect: '/'
+    }
+  ]
 })
