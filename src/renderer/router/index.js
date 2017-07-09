@@ -7,7 +7,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: require('@/components/carousel')
+      component: require('@/components/MyComponent')
     },
     {
       path: '*',
