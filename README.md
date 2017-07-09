@@ -5,6 +5,8 @@
 #### Build Setup
 
 ``` bash
+git clone https://github.com/blaadje/electron-vue.git mon-folder
+
 # install dependencies
 npm install
 
