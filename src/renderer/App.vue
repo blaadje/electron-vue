@@ -1,6 +1,5 @@
 <template>
-  <myComponent>
-  </myComponent>
+  <myComponent style="webkit-app-region:drag"></myComponent>
 </template>
 
 <script>
@@ -12,4 +11,5 @@ export default {
 </script>
 
 <style>
+
 </style>
