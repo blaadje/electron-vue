@@ -1,0 +1,45 @@
+body
+  margin: 0
+  padding: 0
+  background: white
+
+*
+  box-sizing: border-box
+  
+.connexion
+  position: fixed
+  background: rgba(black, 0.8)
+  width: 100vw
+  height: 100vh
+  .content
+    padding: 1.5em
+    background: white
+    width: 40%
+    height: 40%
+    border: 1px solid white
+    position: absolute
+    left: 0
+    right: 0
+    margin: auto
+    top: 0
+    bottom: 0
+.userList
+  ul
+    margin: 0
+    padding: 0
+    li
+      list-style-type: none
+      padding: 1em
+      &:not(:last-child)
+        border-bottom: 1px solid grey
+      &.fade-active
+        transition: transform 1s ease
+      &.fade-enter
+        transform: translateX(-400px)
+      &.fade-enter-to
+        transform: translateX(0)
+      &.fade-leave-to
+        transform: translate(-400px)
+  input[type="text"]
+    position: fixed
+    bottom: 10px

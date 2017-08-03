@@ -1,5 +1,12 @@
 <template lang="pug">
+.root
+  .connexion(v-if="showConnection === true")
+    .content
+      h1 Entrez votre nom d'utilisateur
+      input(type="text", v-model="user")
+      button(@click.prevent="showConnection = false") Quitter
   .userList
+    span {{ user }}
     transition-group(name="fade", tag="ul")
       li(v-for="(user, index) in users", key="index") {{ user.name }}
         p {{ user['.key'] }}
@@ -10,6 +17,8 @@
 <script>
 import Firebase from 'firebase'
 
+var i = 0
+
 var config = {
   databaseURL: 'https://projet-tets.firebaseio.com',
   projectId: 'projet-tets'
@@ -19,6 +28,13 @@ var db = firebaseApp.database()
 var ref = db.ref('users')
 
 export default {
+  data () {
+    return {
+      user: '',
+      showConnection: true,
+      content: ''
+    }
+  },
   firebase () {
     return {
       users: ref.orderByKey()
@@ -26,8 +42,8 @@ export default {
   },
   methods: {
     addUser () {
+      i++
       this.newUser = this.$refs.name.value
-      // db.ref('users').push({ name: this.$refs.name.value })
       ref.child(this.getkey()).set({ name: this.$refs.name.value })
       this.$refs.name.value = ''
     },
@@ -35,14 +51,21 @@ export default {
       ref.child(name['.key']).remove()
     },
     getkey () {
-      // let key = Math.random().toString(36).substring(3)
-      let date = new Date()
-      let yy = date.getFullYear()
-      let mm = date.getMonth()
-      let dd = date.getDay()
-      let m = date.getMinutes()
-      let s = date.getSeconds()
-      let result = '-' + yy + '' + mm + '' + dd + '' + m + '' + s
+      var date = new Date()
+      var yy = date.getFullYear()
+      var mm = date.getMonth()
+      var dd = date.getDay()
+      var hh = date.getHours()
+      var m = date.getMinutes()
+      var s = date.getSeconds()
+
+      mm = mm < 10 ? '0' + mm : mm
+      dd = dd < 10 ? '0' + dd : dd
+      hh = hh < 10 ? '0' + hh : hh
+      m = m < 10 ? '0' + m : m
+      s = s < 10 ? '0' + s : s
+
+      let result = '-' + yy + '' + mm + '' + dd + '' + hh + '' + m + '' + s + i
       return result
     }
   }
@@ -50,22 +73,4 @@ export default {
 }
 </script>
 
-<style lang="sass">
-.userList
-  ul
-    margin: 0
-    padding: 0
-    li
-      list-style-type: none
-      padding: 1em
-      &:not(:last-child)
-        border-bottom: 1px solid grey
-      &.fade-active
-        transition: transform 1s ease
-      &.fade-enter
-        transform: translateX(-400px)
-      &.fade-enter-to
-        transform: translateX(0)
-      &.fade-leave-to
-        transform: translate(-400px)
-</style>
+<style lang="sass" src="./MyComponent.sass"></style>
