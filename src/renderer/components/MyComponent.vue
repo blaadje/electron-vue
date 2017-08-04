@@ -1,17 +1,15 @@
 <template lang="pug">
 .root
-  .connexion(v-if="showConnection === true")
+  .connexion(v-if="showConnection")
     .content
       h1 Entrez votre nom d'utilisateur
-      input(type="text", v-model="user")
-      button(@click.prevent="showConnection = false") Quitter
+      input(type="text", v-model="user", @keydown.enter="sendUser")
+      button(@click.prevent="sendUser") Quitter
   .userList
-    span {{ user }}
     transition-group(name="fade", tag="ul")
-      li(v-for="(user, index) in users", key="index") {{ user.name }}
-        p {{ user['.key'] }}
+      li(v-for="(user, index) in users", key="index") {{ user.name }} : {{ user.message }}
         button(@click.prevent="deleteUser(user)") X
-    input(type="text", ref="name", @keydown.enter="addUser")
+    input(type="text", ref="message", @keydown.enter="addUser")
 </template>
 
 <script>
@@ -41,11 +39,13 @@ export default {
     }
   },
   methods: {
+    sendUser () {
+      this.showConnection = false
+    },
     addUser () {
       i++
-      this.newUser = this.$refs.name.value
-      ref.child(this.getkey()).set({ name: this.$refs.name.value })
-      this.$refs.name.value = ''
+      ref.child(this.getkey()).set({ message: this.$refs.message.value, name: this.user })
+      this.$refs.message.value = ''
     },
     deleteUser (name) {
       ref.child(name['.key']).remove()
