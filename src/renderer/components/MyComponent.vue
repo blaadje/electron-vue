@@ -7,7 +7,7 @@
       button(@click.prevent="sendUser") Quitter
   .userList
     transition-group(name="fade", tag="ul")
-      li(v-for="(user, index) in users", key="index") {{ user.name }} : {{ user.message }}
+      li(v-for="(user, index) in users", key="index") {{ username }} : {{ user.message }}
         button(@click.prevent="deleteUser(user)") X
     input(type="text", ref="message", @keydown.enter="addUser")
 </template>
@@ -36,6 +36,11 @@ export default {
   firebase () {
     return {
       users: ref.orderByKey()
+    }
+  },
+  computed: {
+    username () {
+      return this.user.name === this.user ? 'moi' : this.user.name
     }
   },
   methods: {
